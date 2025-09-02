@@ -1,10 +1,44 @@
-let todos =JSON.parse(localStorage.getItem('todo')) || [];
+
+
+let projects =JSON.parse(localStorage.getItem('project'))|| [];
+let currentProjectIndex = 0;
+
+if (projects.length === 0) {
+  projects.push({ name: "", todos: [] });
+  saveToStorage();
+}
+
 
 renderTodo();
+function addProject () {
+  const projectName = document.getElementById('projectName').value;
+  const projectIndex = projects.findIndex(p => p.name === projectName);
+  if(projectIndex !== -1) {
+   currentProjectIndex = projectIndex;
+  } else {
+    projects.push( {
+      name: projectName,
+      todos: []
+    });
+    currentProjectIndex = projects.length -1;
+    saveToStorage();
+  }
+  saveToStorage();
+
+  document.getElementById('project').innerHTML = projects[currentProjectIndex].name;
+  document.getElementById('todoInput').innerHTML = `
+    <input id="taskInput" type="text" placeholder="Aufgabe eingeben">
+      <button onclick="
+        addTodo();
+      ">+</button>
+  `;
+  renderTodo();
+}
 
 function renderTodo () {
+  const list = projects[currentProjectIndex].todos;
   let html = '';
-  todos.forEach(item => {
+  list.forEach(item => {
     html += `
     <div>
       <ul>
@@ -25,7 +59,7 @@ function renderTodo () {
 }
 
 function toggleDone (itemId, isChecked) {
-  const todo = todos.find(t => t.id === itemId);
+  const todo = projects[currentProjectIndex].todos.find(t => t.id === itemId);
   if (todo) {
     todo.done = isChecked;
     saveToStorage();
@@ -35,12 +69,12 @@ function toggleDone (itemId, isChecked) {
 
 
 function deleteTodo (itemId) {
-  todos = todos.filter(todo => {
-    return todo.id !== itemId;
-  });
-  renderTodo();
-  saveToStorage();
+  const list = projects[currentProjectIndex].todos;
+  projects[currentProjectIndex].todos= list.filter(todo => todo.id !== itemId);
   
+  
+  saveToStorage();
+  renderTodo();
 }
 
 function addTodo () {
@@ -49,11 +83,13 @@ function addTodo () {
     id: crypto.randomUUID(),
     done: false
   };
-  todos.push(item);
+  projects[currentProjectIndex].todos.push(item);
   saveToStorage();
   renderTodo();
 }
 
 function saveToStorage () {
-  localStorage.setItem('todo',JSON.stringify(todos));
+  //localStorage.setItem('todo',JSON.stringify(todos));
+  localStorage.setItem('project',JSON.stringify(projects));
 }
+

@@ -75,13 +75,13 @@
   </div>
   <main class="Todo">
     <div class="Todo_header">
-      <h1>Aufgabe erstellen</h1>
+        <h1 id="project"><input type="text" id="projectName" placeholder="Bitte geben sie den Projektnamen ein">
+          <button onclick="
+            addProject();
+            ">+</button>
+        </h1>    
     </div>
-    <div class="Todo_input">
-      <input id="taskInput" type="text" placeholder="Aufgabe eingeben">
-      <button onclick="
-        addTodo();
-      ">+</button>
+    <div class="Todo_input" id="todoInput">
     </div>
     <div class="Todo_list" id="Liste"> </div>
     
