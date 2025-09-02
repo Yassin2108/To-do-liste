@@ -1,6 +1,6 @@
-let todos = [];
+let todos =JSON.parse(localStorage.getItem('todo')) || [];
 
-
+renderTodo();
 
 function renderTodo () {
   let html = '';
@@ -27,7 +27,7 @@ function deleteTodo (itemId) {
     return todo.id !== itemId;
   });
   renderTodo();
-
+  saveToStorage();
   
 }
 
@@ -37,6 +37,10 @@ function addTodo () {
     id: crypto.randomUUID()
   };
   todos.push(item);
-
+  saveToStorage();
   renderTodo();
+}
+
+function saveToStorage () {
+  localStorage.setItem('todo',JSON.stringify(todos));
 }
