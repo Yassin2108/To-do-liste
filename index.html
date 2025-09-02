@@ -8,6 +8,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
   <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
     body{
      display: flex;
      align-items: center;
@@ -73,11 +78,17 @@
       <h1>Aufgabe erstellen</h1>
     </div>
     <div class="Todo_input">
-      <input type="text" placeholder="Aufgabe eingeben">
-      <button>+</button>
+      <input id="taskInput" type="text" placeholder="Aufgabe eingeben">
+      <button onclick="
+        addTodo();
+      ">+</button>
     </div>
+    <div class="Todo_list" id="Liste"> </div>
+    
   </main>
   
   
 </body>
+
+<script src="script/list.js"></script>
 </html>
