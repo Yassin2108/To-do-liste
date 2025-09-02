@@ -9,7 +9,10 @@ function renderTodo () {
     <div>
       <ul>
         <li id= "${item.id}">
-          <input type="checkbox"> ${item.content}
+          <input type="checkbox"
+            onchange="toggleDone('${item.id}', this.checked)"
+            ${item.done ? 'checked' : ''}
+          > ${item.content}
           <button onclick = "
             deleteTodo('${item.id}');
           ">delete</button>
@@ -19,6 +22,15 @@ function renderTodo () {
   `;
   });
   document.getElementById('Liste').innerHTML = html;
+}
+
+function toggleDone (itemId, isChecked) {
+  const todo = todos.find(t => t.id === itemId);
+  if (todo) {
+    todo.done = isChecked;
+    saveToStorage();
+    renderTodo();
+  }
 }
 
 
@@ -34,7 +46,8 @@ function deleteTodo (itemId) {
 function addTodo () {
   const item = {
     content: document.getElementById('taskInput').value,
-    id: crypto.randomUUID()
+    id: crypto.randomUUID(),
+    done: false
   };
   todos.push(item);
   saveToStorage();
