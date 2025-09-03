@@ -10,19 +10,25 @@ if (accounts.length === 0) {
 function addAccount () {
   const accountEmail = document.getElementById('email').value;
   const accountIndex = accounts.findIndex (a => a.email === accountEmail);
+  const accountPassword = document.getElementById('password').value;
   if(accountIndex !== -1) {
     currentAccountIndex = accountIndex;
+    if (accountPassword === accounts[currentAccountIndex].password) {
+      window.location.href = './index.html';
+    } else {
+      alert('Falsches Passwort');
+    }
   } else {
     accounts.push({
       email: accountEmail,
-      password: document.getElementById('password').value,
+      password: accountPassword,
       projects: []
     });
     currentAccountIndex = accounts.length -1;
     saveAccounts();
+    window.location.href = './index.html';
   }
   saveAccounts();
-  console.log(accounts[currentAccountIndex]);
 }
 
 export function saveAccounts () {
