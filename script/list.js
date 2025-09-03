@@ -1,11 +1,13 @@
+import { accounts, currentAccountIndex, saveAccounts } from "./account.js";
 
 
-export let projects =JSON.parse(localStorage.getItem('project'))|| [];
+let projects =accounts[currentAccountIndex].projects || (accounts[currentAccountIndex].projects = []);
+
 let currentProjectIndex = 0;
 
 if (projects.length === 0) {
   projects.push({ name: "", todos: [] });
-  saveToStorage();
+  saveAccounts();
 }
 
 
@@ -23,9 +25,9 @@ function addProject () {
       todos: []
     });
     currentProjectIndex = projects.length -1;
-    saveToStorage();
+    saveAccounts();
   }
-  saveToStorage();
+  saveAccounts();
 
   document.getElementById('project').innerHTML = projects[currentProjectIndex].name;
   document.getElementById('todoInput').innerHTML = `
@@ -64,7 +66,7 @@ function toggleDone (itemId, isChecked) {
   const todo = projects[currentProjectIndex].todos.find(t => t.id === itemId);
   if (todo) {
     todo.done = isChecked;
-    saveToStorage();
+    saveAccounts();
     renderTodo();
   }
 }
@@ -75,7 +77,7 @@ function deleteTodo (itemId) {
   projects[currentProjectIndex].todos= list.filter(todo => todo.id !== itemId);
   
   
-  saveToStorage();
+  saveAccounts();
   renderTodo();
 }
 
@@ -86,12 +88,16 @@ function addTodo () {
     done: false
   };
   projects[currentProjectIndex].todos.push(item);
-  saveToStorage();
+  saveAccounts();
   renderTodo();
 }
 
-function saveToStorage () {
+/*function saveToStorage () {
   //localStorage.setItem('todo',JSON.stringify(todos));
-  localStorage.setItem('project',JSON.stringify(projects));
-}
+  localStorage.setItem('project',JSON.stringify(projects1));
+}*/
 
+window.addProject = addProject;
+window.addTodo = addTodo;
+window.deleteTodo = deleteTodo;
+window.toggleDone = toggleDone;
