@@ -1,6 +1,6 @@
 
 
-let projects =JSON.parse(localStorage.getItem('project'))|| [];
+export let projects =JSON.parse(localStorage.getItem('project'))|| [];
 let currentProjectIndex = 0;
 
 if (projects.length === 0) {
@@ -9,7 +9,9 @@ if (projects.length === 0) {
 }
 
 
-renderTodo();
+if (document.getElementById('Liste')) {
+  renderTodo();
+}
 function addProject () {
   const projectName = document.getElementById('projectName').value;
   const projectIndex = projects.findIndex(p => p.name === projectName);
