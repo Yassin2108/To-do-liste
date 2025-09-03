@@ -47,10 +47,13 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 400px;
-      margin-left: 550px;
-      
-      
-      
+      margin-left: 550px; 
+    }
+    .back {
+       transform: translateX(-100%);
+    }
+    .side_Button{
+      transform: translate(20%);
     }
   </style>
 
@@ -59,16 +62,26 @@
 </head>
 <body>
 
-  <div class="containerSidebar">
+  <div class="containerSidebar" >
     <aside class="sidebar"><!--Markiert Abschnitt der nicht zum Hauptinhalt gehört wie div nur speziell für sidebars..-->
-      <div class="sidebar_header">
+      <div class="sidebar_header" id="header">
         <a href="login.html">
           <span class="material-icons">account_circle</span>
           Account
         </a>
-        <span class="material-icons-outlined">menu</span>
+        <button class="side_Button" onclick="
+          const sidebarH = document.getElementById('header');
+          const sidebarM = document.getElementById('middle');
+          if (sidebarH.classList.contains('back')) {
+            sidebarH.classList.remove('back');
+            sidebarM.classList.remove('back');
+          } else {
+            sidebarH.classList.add('back');
+            sidebarM.classList.add('back');
+          }
+        "><span class="material-icons-outlined">menu</span></button>
       </div>
-      <div class="sidebar_middle">
+      <div class="sidebar_middle" id="middle">
         <form    action="/suche">
           <input  class="suche"   type="search" placeholder="Aufgabe Suchen">
         </form> 
